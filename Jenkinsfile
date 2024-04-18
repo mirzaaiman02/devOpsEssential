@@ -1,11 +1,5 @@
 // MOHAMAD MIRZA AIMAN BIN ZULKIPLE
-<role rolename="manager-gui"/>
-  <role rolename="admin-gui"/>
-  <role rolename="manager-script"/>
-  <role rolename="manager-jmx"/>
-  <role rolename="manager-status"/>
-Jump
-<user username="admin" password="#Mirza_9854!" roles="manager-gui,admin-gui,manager-script,manager-jmx,manager-status"
+
 pipeline{
     agent any
     tools{
