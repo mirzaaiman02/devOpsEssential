@@ -1,33 +1,23 @@
-pipeline {
-    agent any
-    
-    tools {
-        maven 'local_maven'
-    }
-    parameters {
-         string(name: 'staging_server', defaultValue: '13.232.37.20', description: 'Remote Staging Server')
-    }
+// MOHAMAD MIRZA AIMAN BIN ZULKIPLE
 
-stages{
-        stage('Build'){
-            steps {
+pipeline{
+    agent any
+
+    stages{      //stages 1 and 2
+        stage('Build'){                       // stage 1
+            steps{
                 sh 'mvn clean package'
             }
-            post {
-                success {
-                    echo 'Archiving the artifacts'
+            post{
+                success{
+                    echo "Archiving the Artifacts"
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-
-        stage ('Deployments'){
-            parallel{
-                stage ("Deploy to Staging"){
-                    steps {
-                        sh "scp -v -o StrictHostKeyChecking=no **/*.war root@${params.staging_server}:/opt/tomcat/webapps/"
-                    }
-                }
+        stage ('Deploy to tomcat server') {       // stage 2
+            steps{
+                deploy adapters: [tomcat7(credentialsId: '3e031361-be15-44f2-8ffd-1ad025532232', path: '', url: 'http://3.108.221.41:8282/')], contextPath: null, war: '**/*.war'
             }
         }
     }
